@@ -1,0 +1,20 @@
+{
+  "name": "tz1_blog",
+  "compatibility_date": "2025-01-20",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": ".vercel/output/static",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "blog_dev",
+      "database_id": "992fe911-50a5-4327-b594-4a205d6790c0",
+      "migrations_dir": "./.drizzle/"
+    },
+    {
+      "binding": "DB_LOCAL",
+      "database_name": "blog_dev_local",
+      "database_id": "992fe911-50a5-4327-b594-4a205d6790c0",
+      "migrations_dir": "./.drizzle/"
+    }
+  ]
+}

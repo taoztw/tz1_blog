@@ -10,7 +10,8 @@
 !.yarn/releases
 !.yarn/versions
 
-drizzle/
+.drizzle
+.wrangler
 wrangler.toml
 
 

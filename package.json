@@ -7,8 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "studio:dev": "drizzle-kit studio",
-    "studio:prd": "cross-env NODE_ENV=production drizzle-kit studio",
     "db:migrate:dev": "wrangler d1 migrations apply blog_dev_local  --local",
     "db:migrate:prod": "wrangler d1 migrations apply blog_dev  --remote",
     "db:studio:dev": "DB_LOCAL_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' -print -quit) drizzle-kit studio --port 3094",

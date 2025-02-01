@@ -14,6 +14,7 @@
 .wrangler
 wrangler.toml
 
+/drizzle
 
 # testing
 /coverage

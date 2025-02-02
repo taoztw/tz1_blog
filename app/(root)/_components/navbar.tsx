@@ -4,14 +4,11 @@ import React from "react";
 import { ModeToggle } from "@/components/modeToggle";
 import { cn } from "@/lib/utils";
 import { Button } from "../../../components/ui/button";
-import { ChevronRight, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import UserItem from "./userItem";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,

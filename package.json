@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "db:generate": "drizzle-kit generate",
     "db:migrate:dev": "wrangler d1 migrations apply blog_dev_local  --local",
     "db:migrate:prod": "wrangler d1 migrations apply blog_dev  --remote",
     "db:studio:dev": "DB_LOCAL_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' -print -quit) drizzle-kit studio --port 3094",
-    "db:studio:prod": "pnpm setup:prod && drizzle-kit studio --port 3098",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy"
+    "db:studio:prod": "npm run setup:prod && drizzle-kit studio --port 3098",
+    "setup:dev": "cp .env.development .env && cp .env.development .env.production.local && cp wrangler.json.development wrangler.json",
+    "setup:prod": "cp .env.production .env && cp .env.production .env.production.local && cp wrangler.json.production wrangler.json",
+    "pages:build": "npm next-on-pages",
+    "pages:dev": "npm run setup:dev && npm pages:build && npm wrangler pages dev --port=3000",
+    "pages:deploy": "npm run setup:prod && npm pages:build && npm wrangler pages deploy"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -46,8 +49,6 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.7",
-    "@cloudflare/workers-types": "^4.20250109.0",
     "@eslint/eslintrc": "^3",
     "@types/better-sqlite3": "^7.6.12",
     "@types/node": "^20",
@@ -62,7 +63,6 @@
     "tsx": "^4.19.2",
     "typescript": "^5"
   },
-  "packageManager": "yarn@1.22.22",
   "overrides": {
     "react": "$react",
     "react-dom": "$react-dom"

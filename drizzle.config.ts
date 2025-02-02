@@ -1,47 +1,28 @@
-import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
-import fs from "fs";
-import path from "path";
+import { env } from "@/env";
 
-function getLocalD1DB() {
-  try {
-    const basePath = path.resolve(".wrangler");
-    const dbFile = fs
-      .readdirSync(basePath, { encoding: "utf-8", recursive: true })
-      .find((f) => f.endsWith(".sqlite"));
-
-    if (!dbFile) {
-      throw new Error(`.sqlite file not found in ${basePath}`);
-    }
-
-    const url = path.resolve(basePath, dbFile);
-    return url;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.log(`Error  ${err.message}`);
-    } else {
-      console.log(`Unexpected error`, err);
-    }
-  }
-}
-
-export default defineConfig({
-  dialect: "sqlite",
-  schema: "./db/schemas/schema.ts",
-  out: "./.drizzle",
-  ...(process.env.NODE_ENV === "production"
-    ? {
-        driver: "d1-http",
-        dbCredentials: {
-          accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
-          databaseId: process.env.CLOUDFLARE_DATABASE_ID,
-          token: process.env.CLOUDFLARE_D1_TOKEN,
-        },
-      }
-    : {
-        dbCredentials: {
-          url: getLocalD1DB(),
-        },
-      }),
-});
+/*
+ * NOTE: Workaround to make drizzle studio work with D1.
+ * https://kevinkipp.com/blog/going-full-stack-on-astro-with-cloudflare-d1-and-drizzle/
+ * Github discussion: https://github.com/drizzle-team/drizzle-orm/discussions/1545#discussioncomment-8115423
+ */
+export default env.DB_LOCAL_PATH
+  ? defineConfig({
+      schema: "./server/db/schemas",
+      dialect: "sqlite",
+      dbCredentials: {
+        url: env.DB_LOCAL_PATH,
+      },
+    })
+  : defineConfig({
+      schema: "./server/db/schemas",
+      out: "./.drizzle",
+      driver: "d1-http",
+      dialect: "sqlite",
+      dbCredentials: {
+        accountId: env.CF_ACCOUNT_ID!,
+        token: env.CF_USER_API_TOKEN!,
+        databaseId: env.DB_REMOTE_DATABASE_ID!,
+      },
+    });

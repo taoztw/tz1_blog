@@ -32,20 +32,20 @@ const SinglePost = ({ post }: PostProps) => {
           </time>
           <a
             href={post.category.href}
-            className="relative z-10 rounded-full bg-gray-50 dark:bg-gray-800 dark:text-gray-400 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600"
+            className="relative z-10 rounded-full bg-gray-50 dark:bg-gray-800 dark:text-gray-400 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-300"
           >
             {post.category.title}
           </a>
         </div>
 
         <div className="group relative">
-          <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300">
+          <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600 dark:text-gray-200 dark:group-hover:text-gray-300">
             <a href={post.slug}>
               <span className="absolute inset-0" />
               {post.title}
             </a>
           </h3>
-          <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600 dark:text-gray-400">
+          <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600 dark:text-gray-200">
             {post.description}
           </p>
         </div>
